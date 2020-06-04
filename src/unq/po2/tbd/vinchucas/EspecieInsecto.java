@@ -6,7 +6,9 @@ public enum EspecieInsecto {
 	VINCHUCA_GUASAYANA("Vinchuca Guasayana"),
 	VINCHUCA_SORDIDA("Vinchuca Sordida"),
 	CHINCHE_FOLIADA("Chince Foliada"),
-	PHTIA_CHINCHE("Phtia-Chinche");
+	PHTIA_CHINCHE("Phtia-Chinche"),
+	IMAGEN_POCO_CLARA("Imagen poco clara"),
+	INDEFINIDA("Indefinida");
 	
 	private final String etiqueta;
 	
