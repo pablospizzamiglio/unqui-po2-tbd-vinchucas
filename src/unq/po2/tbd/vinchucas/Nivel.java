@@ -4,8 +4,6 @@ public interface Nivel {
 	
 	public Boolean esExperto();
 	
-	public void opinarSobreMuestra(Muestra muestra, Usuario usuario, String calificacion);
-	
-	public void enviarMuestra(Muestra muestra, Usuario usuario, String calificacion);
+	public void cambiarNivel(Usuario usuario);
 
 }

@@ -4,21 +4,23 @@ import java.time.LocalDate;
 
 public class Opinion {
 	
-	private String calificacion;
+	private EspecieInsecto calificacion;
 	private LocalDate fecha;
 	private Usuario usuario;
+	private Boolean esDeUsuarioExperto;
 	
-	public Opinion(String calificacion, LocalDate fecha, Usuario usuario) {
+	public Opinion(EspecieInsecto calificacion, LocalDate fecha, Usuario usuario) {
 		this.setCalificacion(calificacion);
 		this.setFecha(fecha);
 		this.setUsuario(usuario);
+		this.setEsDeUsuarioExperto(usuario.esExperto());
 	}
 
-	public String getCalificacion() {
+	public EspecieInsecto getCalificacion() {
 		return calificacion;
 	}
 
-	private void setCalificacion(String calificacion) {
+	private void setCalificacion(EspecieInsecto calificacion) {
 		this.calificacion = calificacion;
 	}
 
@@ -39,7 +41,10 @@ public class Opinion {
 	}
 
 	public Boolean esDeUsuarioExperto() {
-		return this.getUsuario().esExperto();
+		return esDeUsuarioExperto;
 	}
 
+	private void setEsDeUsuarioExperto(Boolean esDeUsuarioExperto) {
+		this.esDeUsuarioExperto = esDeUsuarioExperto;
+	}
 }

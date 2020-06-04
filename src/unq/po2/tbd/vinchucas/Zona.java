@@ -65,6 +65,10 @@ public class Zona {
 		this.getMuestras().add(muestra);
 		this.notificar(this, muestra);
 	}
+	
+	public void nuevaOpinionRegistradaEn(Muestra muestra) {
+		this.notificar(this, muestra);
+	}
 
 	public void suscribir(Suscriptor subscriptor) {
 		this.getSuscriptores().add(subscriptor);
@@ -94,7 +98,7 @@ public class Zona {
 		return this.getEpicentro().distancia(zona.getEpicentro()) < this.getDistancia() + zona.getDistancia();
 	}
 
-	public List<Zona> solapadas(List<Zona> zonas) {
+	public List<Zona> zonasSolapadas(List<Zona> zonas) {
 		return zonas.stream()
 				.filter(z -> z.estaSolapada(this))
 				.collect(Collectors.toList());

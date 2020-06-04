@@ -27,9 +27,9 @@ class TestOpinion {
 		when(usuarioBasico.getIdentificacion()).thenReturn("usuario_basico");
 		when(usuarioBasico.esExperto()).thenReturn(false);
 		
-		opinion = new Opinion("imagen poco clara", hoy, usuarioBasico);
+		opinion = new Opinion(EspecieInsecto.IMAGEN_POCO_CLARA, hoy, usuarioBasico);
 		
-		assertEquals("imagen poco clara", opinion.getCalificacion());
+		assertEquals(EspecieInsecto.IMAGEN_POCO_CLARA, opinion.getCalificacion());
 		assertEquals(hoy, opinion.getFecha());
 		assertEquals(usuarioBasico, opinion.getUsuario());
 		assertFalse(opinion.esDeUsuarioExperto());
@@ -40,9 +40,9 @@ class TestOpinion {
 		when(usuarioExperto.getIdentificacion()).thenReturn("usuario_experto");
 		when(usuarioExperto.esExperto()).thenReturn(true);
 		
-		opinion = new Opinion("vinchuca infestans", hoy, usuarioExperto);
+		opinion = new Opinion(EspecieInsecto.VINCHUCA_INFESTANS, hoy, usuarioExperto);
 		
-		assertEquals("vinchuca infestans", opinion.getCalificacion());
+		assertEquals(EspecieInsecto.VINCHUCA_INFESTANS, opinion.getCalificacion());
 		assertEquals(hoy, opinion.getFecha());
 		assertEquals(usuarioExperto, opinion.getUsuario());
 		assertTrue(opinion.esDeUsuarioExperto());

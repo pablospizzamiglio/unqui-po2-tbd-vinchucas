@@ -3,7 +3,7 @@ package unq.po2.tbd.vinchucas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AplicacionWeb {
+public class AplicacionWeb implements Aplicacion {
 	
 	private List<Usuario> usuarios;
 	private List<Zona> zonas;
@@ -39,16 +39,36 @@ public class AplicacionWeb {
 		this.muestras = muestras;
 	}
 	
+	@Override
 	public void registrarUsuario(Usuario usuario) {
 		this.getUsuarios().add(usuario);
 	}
 	
+	@Override
 	public void registrarZona(Zona zona) {
 		this.getZonas().add(zona);
 	}
 	
+	@Override
 	public void registrarMuestra(Muestra muestra) {
 		this.getMuestras().add(muestra);
+
+		for (Zona zona : this.getZonas()) {
+			if (zona.estaDentro(muestra)) {
+				zona.agregarMuestra(muestra);
+			}
+		}
+	}
+
+	@Override
+	public void registrarOpinionSobreMuestra(Muestra muestra, Opinion opinion) {
+		muestra.agregarOpinion(opinion);
+		
+		for (Zona zona : this.getZonas()) {
+			if (zona.estaDentro(muestra)) {
+				zona.nuevaOpinionRegistradaEn(muestra);
+			}
+		}
 	}
 
 }

@@ -1,4 +1,5 @@
 package unq.po2.tbd.vinchucas;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -6,8 +7,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import unq.po2.tbd.vinchucas.Ubicacion;
 
 class TestUbicacion {
 	
@@ -41,11 +40,10 @@ class TestUbicacion {
 		this.ubicaciones.add(cordoba);
 		this.ubicaciones.add(tucuman);
 		this.ubicaciones.add(salta);
-		
 	}
 
 	@Test
-	void testGetters() {
+	void testGetters() {		
 		assertEquals(Double.valueOf(-34.608418), this.buenosAires.getLatitud());
 		assertEquals(Double.valueOf(-58.373161), this.buenosAires.getLongitud());
 	}

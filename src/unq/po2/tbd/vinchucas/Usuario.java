@@ -1,44 +1,74 @@
 package unq.po2.tbd.vinchucas;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
 	
+	private Aplicacion aplicacion;
 	private String identificacion;
 	private Nivel nivel;
+	private Boolean esExpertoValidadoExternamente;
 	private List<Muestra> muestras;
 	private List<Opinion> opiniones;
-
-	public Usuario(String identificacion) {
+	
+	public Usuario(Aplicacion aplicacion, String identificacion, Nivel nivel) {
+		this.setAplicacion(aplicacion);
 		this.setIdentificacion(identificacion);
-		this.setNivel(new NivelBasico());
+		this.setNivel(nivel);
+		this.setEsExpertoValidadoExternamente(esExpertoValidadoExternamente);
 		this.setMuestras(new ArrayList<Muestra>());
 		this.setOpiniones(new ArrayList<Opinion>());
+	}
+
+	public Usuario(Aplicacion aplicacion, String identificacion, Nivel nivel, Boolean esExpertoValidadoExternamente) {
+		this.setAplicacion(aplicacion);
+		this.setIdentificacion(identificacion);
+		this.setNivel(nivel);
+		this.setEsExpertoValidadoExternamente(esExpertoValidadoExternamente);
+		this.setMuestras(new ArrayList<Muestra>());
+		this.setOpiniones(new ArrayList<Opinion>());
+	}
+	
+	public Aplicacion getAplicacion() {
+		return aplicacion;
+	}
+	
+	private void setAplicacion(Aplicacion aplicacion) {
+		this.aplicacion = aplicacion;
 	}
 
 	public String getIdentificacion() {
 		return identificacion;
 	}
 
-	public void setIdentificacion(String identificacion) {
+	private void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
 	}
 
 	public Nivel getNivel() {
 		return nivel;
 	}
-
-	private void setNivel(Nivel nivel) {
+	
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
+	}
+	
+	public Boolean esExpertoValidadoExternamente() {
+		return esExpertoValidadoExternamente;
+	}
+
+	private void setEsExpertoValidadoExternamente(Boolean esExpertoValidadoExternamente) {
+		this.esExpertoValidadoExternamente = esExpertoValidadoExternamente;
 	}
 
 	public List<Muestra> getMuestras() {
 		return muestras;
 	}
 
-	public void setMuestras(List<Muestra> muestras) {
+	private void setMuestras(List<Muestra> muestras) {
 		this.muestras = muestras;
 	}
 
@@ -46,28 +76,48 @@ public class Usuario {
 		return opiniones;
 	}
 
-	public void setOpiniones(List<Opinion> opiniones) {
+	private void setOpiniones(List<Opinion> opiniones) {
 		this.opiniones = opiniones;
 	}
-	
-	public Boolean puedePromocionarNivel() {
-		return true;
+
+	public Long numeroOpinionesUltimos30Dias() {
+		return this.getOpiniones().stream()
+				.filter(o -> Math.abs(ChronoUnit.DAYS.between(o.getFecha(), LocalDate.now())) >= 30)
+				.count();
 	}
 	
-	public Integer numeroMuestrasEnviadas() {
-		return this.getMuestras().size();
+	public Long numeroMuestrasUltimos30Dias() {
+		return this.getOpiniones().stream()
+				.filter(m -> Math.abs(ChronoUnit.DAYS.between(m.getFecha(), LocalDate.now())) >= 30)
+				.count();
 	}
 	
-	public Integer numeroOpiniones() {
-		return this.getOpiniones().size();
+	private Boolean puedeCambiarNivel() {
+		return !this.esExpertoValidadoExternamente() 
+				&& this.numeroMuestrasUltimos30Dias() == 10 
+				&& this.numeroOpinionesUltimos30Dias() == 20;
+	}
+	
+	public void evaluarPromocionNivel() {
+		if (puedeCambiarNivel()) {
+			this.getNivel().cambiarNivel(this);
+		}
 	}
 	
 	public Boolean esExperto() {
 		return this.getNivel().esExperto();
 	}
 	
-	public void opinarSobreMuestra(Muestra muestra, String calificacion, LocalDate fecha) {
-		muestra.agregarOpinion(calificacion, fecha, this);
+	public void enviarMuestra(Muestra muestra) {
+		this.getMuestras().add(muestra);
+		this.getAplicacion().registrarMuestra(muestra);
+		this.evaluarPromocionNivel();
+	}
+	
+	public void opinarSobreMuestra(Muestra muestra, Opinion opinion) {
+		this.getOpiniones().add(opinion);
+		this.getAplicacion().registrarOpinionSobreMuestra(muestra, opinion);
+		this.evaluarPromocionNivel();
 	}
 
 	@Override
