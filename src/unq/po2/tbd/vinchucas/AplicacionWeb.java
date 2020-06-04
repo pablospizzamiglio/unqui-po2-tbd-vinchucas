@@ -5,16 +5,26 @@ import java.util.List;
 
 public class AplicacionWeb implements Aplicacion {
 	
+	private Buscador buscador;
 	private List<Usuario> usuarios;
 	private List<Zona> zonas;
 	private List<Muestra> muestras;
 	
-	public AplicacionWeb(List<Usuario> usuarios, List<Zona> zonas, List<Muestra> muestras) {
+	public AplicacionWeb(Buscador buscador) {
+		this.setBuscador(buscador);
 		this.setUsuarios(new ArrayList<Usuario>());
 		this.setZonas(new ArrayList<Zona>());
 		this.setMuestras(new ArrayList<Muestra>());
 	}
 	
+	public Buscador getBuscador() {
+		return buscador;
+	}
+
+	private void setBuscador(Buscador buscador) {
+		this.buscador = buscador;
+	}
+
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
