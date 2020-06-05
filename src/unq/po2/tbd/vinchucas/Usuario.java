@@ -10,26 +10,15 @@ public class Usuario {
 	private Aplicacion aplicacion;
 	private String identificacion;
 	private Nivel nivel;
-	private Boolean esExpertoValidadoExternamente;
 	private List<Muestra> muestras;
 	private List<Opinion> opiniones;
 	
-	public Usuario(Aplicacion aplicacion, String identificacion, Nivel nivel) {
+	public Usuario(Aplicacion aplicacion, String identificacion) {
 		this.setAplicacion(aplicacion);
 		this.setIdentificacion(identificacion);
-		this.setNivel(nivel);
-		this.setEsExpertoValidadoExternamente(esExpertoValidadoExternamente);
 		this.setMuestras(new ArrayList<Muestra>());
 		this.setOpiniones(new ArrayList<Opinion>());
-	}
-
-	public Usuario(Aplicacion aplicacion, String identificacion, Nivel nivel, Boolean esExpertoValidadoExternamente) {
-		this.setAplicacion(aplicacion);
-		this.setIdentificacion(identificacion);
-		this.setNivel(nivel);
-		this.setEsExpertoValidadoExternamente(esExpertoValidadoExternamente);
-		this.setMuestras(new ArrayList<Muestra>());
-		this.setOpiniones(new ArrayList<Opinion>());
+		this.setNivel(new NivelBasico());
 	}
 	
 	public Aplicacion getAplicacion() {
@@ -55,14 +44,6 @@ public class Usuario {
 	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
-	
-	public Boolean esExpertoValidadoExternamente() {
-		return esExpertoValidadoExternamente;
-	}
-
-	private void setEsExpertoValidadoExternamente(Boolean esExpertoValidadoExternamente) {
-		this.esExpertoValidadoExternamente = esExpertoValidadoExternamente;
-	}
 
 	public List<Muestra> getMuestras() {
 		return muestras;
@@ -80,26 +61,25 @@ public class Usuario {
 		this.opiniones = opiniones;
 	}
 
-	public Long numeroOpinionesUltimos30Dias() {
-		return this.getOpiniones().stream()
-				.filter(o -> Math.abs(ChronoUnit.DAYS.between(o.getFecha(), LocalDate.now())) >= 30)
-				.count();
-	}
-	
 	public Long numeroMuestrasUltimos30Dias() {
 		return this.getOpiniones().stream()
 				.filter(m -> Math.abs(ChronoUnit.DAYS.between(m.getFecha(), LocalDate.now())) >= 30)
 				.count();
 	}
 	
-	private Boolean puedeCambiarNivel() {
-		return !this.esExpertoValidadoExternamente() 
-				&& this.numeroMuestrasUltimos30Dias() == 10 
+	public Long numeroOpinionesUltimos30Dias() {
+		return this.getOpiniones().stream()
+				.filter(o -> Math.abs(ChronoUnit.DAYS.between(o.getFecha(), LocalDate.now())) >= 30)
+				.count();
+	}
+	
+	public Boolean puedeCambiarNivel() {
+		return this.numeroMuestrasUltimos30Dias() == 10 
 				&& this.numeroOpinionesUltimos30Dias() == 20;
 	}
 	
-	public void evaluarPromocionNivel() {
-		if (puedeCambiarNivel()) {
+	public void recalcularNivel() {
+		if (this.puedeCambiarNivel()) {
 			this.getNivel().cambiarNivel(this);
 		}
 	}
@@ -111,13 +91,13 @@ public class Usuario {
 	public void enviarMuestra(Muestra muestra) {
 		this.getMuestras().add(muestra);
 		this.getAplicacion().registrarMuestra(muestra);
-		this.evaluarPromocionNivel();
+		this.recalcularNivel();
 	}
 	
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion) {
 		this.getOpiniones().add(opinion);
 		this.getAplicacion().registrarOpinionSobreMuestra(muestra, opinion);
-		this.evaluarPromocionNivel();
+		this.recalcularNivel();
 	}
 
 	@Override

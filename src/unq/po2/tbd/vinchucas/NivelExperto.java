@@ -4,12 +4,12 @@ public class NivelExperto implements Nivel {
 
 	@Override
 	public Boolean esExperto() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void cambiarNivel(Usuario usuario) {
-		usuario.setNivel(new NivelExperto());
+		usuario.setNivel(new NivelBasico());
 	}
 
 }

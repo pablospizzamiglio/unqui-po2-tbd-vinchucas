@@ -1,20 +1,19 @@
 package unq.po2.tbd.vinchucas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Organizacion implements Suscriptor {
 	
 	private Ubicacion ubicacion;
 	private TipoOrganizacion tipo;
 	private Integer numeroEmpleados;
-	private List<FuncionalidadExterna> funcionalidades;
+	private FuncionalidadExterna funcionalidadNuevaMuestra;
+	private FuncionalidadExterna funcionalidadNuevaOpinion;
 	
-	public Organizacion(Ubicacion ubicacion, TipoOrganizacion tipo, Integer numeroEmpleados) {
+	public Organizacion(Ubicacion ubicacion, TipoOrganizacion tipo, Integer numeroEmpleados, FuncionalidadExterna funcionalidadNuevaMuestra, FuncionalidadExterna funcionalidadNuevaOpinion) {
 		this.setUbicacion(ubicacion);
 		this.setTipo(tipo);
 		this.setNumeroEmpleados(numeroEmpleados);
-		this.setFuncionalidades(new ArrayList<FuncionalidadExterna>());
+		this.setFuncionalidadNuevaMuestra(funcionalidadNuevaMuestra);
+		this.setFuncionalidadNuevaOpinion(funcionalidadNuevaOpinion);
 	}
 
 	public Ubicacion getUbicacion() {
@@ -41,25 +40,30 @@ public class Organizacion implements Suscriptor {
 		this.numeroEmpleados = numeroEmpleados;
 	}
 	
-	public List<FuncionalidadExterna> getFuncionalidades() {
-		return funcionalidades;
+	public FuncionalidadExterna getFuncionalidadNuevaMuestra() {
+		return funcionalidadNuevaMuestra;
 	}
-	
-	private void setFuncionalidades(List<FuncionalidadExterna> funcionalidades) {
-		this.funcionalidades = funcionalidades;
+
+	public void setFuncionalidadNuevaMuestra(FuncionalidadExterna funcionalidadNuevaMuestra) {
+		this.funcionalidadNuevaMuestra = funcionalidadNuevaMuestra;
 	}
-	
-	public void agregarFuncionalidad(FuncionalidadExterna funcionalidad) {
-		this.getFuncionalidades().add(funcionalidad);
+
+	public FuncionalidadExterna getFuncionalidadNuevaOpinion() {
+		return funcionalidadNuevaOpinion;
 	}
-	
-	public void quitarFuncionalidad(FuncionalidadExterna funcionalidad) {
-		this.getFuncionalidades().remove(funcionalidad);
+
+	public void setFuncionalidadNuevaOpinion(FuncionalidadExterna funcionalidadNuevaOpinion) {
+		this.funcionalidadNuevaOpinion = funcionalidadNuevaOpinion;
 	}
 
 	@Override
-	public void notificar(Zona zona, Muestra muestra) {
-		this.getFuncionalidades().forEach(f -> f.nuevoEvento(this, zona, muestra));
+	public void nuevaMuestra(Zona zona, Muestra muestra) {
+		this.getFuncionalidadNuevaMuestra().nuevoEvento(this, zona, muestra);
+	}
+	
+	@Override
+	public void nuevaOpinion(Zona zona, Muestra muestra) {
+		this.getFuncionalidadNuevaOpinion().nuevoEvento(this, zona, muestra);
 	}
 
 }
