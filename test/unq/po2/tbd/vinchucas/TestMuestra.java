@@ -86,7 +86,6 @@ class TestMuestra {
 		assertEquals("usuario_basico", muestra.getIdentificacionUsuario());
 		assertEquals(imagen1, muestra.getFoto());
 		assertEquals(buenosAires, muestra.getUbicacion());
-		assertEquals(opinion1.getCalificacion(), muestra.getEspecie());
 		assertEquals(hoy, muestra.getFecha());
 		assertEquals(Calificacion.INDEFINIDA, muestra.resultadoActual());
 		assertEquals(hoy, muestra.getFechaUltimaVotacion());
@@ -108,7 +107,6 @@ class TestMuestra {
 		assertEquals("usuario_experto", muestra.getIdentificacionUsuario());
 		assertEquals(imagen1, muestra.getFoto());
 		assertEquals(buenosAires, muestra.getUbicacion());
-		assertEquals(opinion1.getCalificacion(), muestra.getEspecie());
 		assertEquals(hoy, muestra.getFecha());
 		assertEquals(Calificacion.INDEFINIDA, muestra.resultadoActual());
 		assertEquals(hoy, muestra.getFechaUltimaVotacion());

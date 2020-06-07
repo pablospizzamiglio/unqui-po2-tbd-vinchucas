@@ -12,7 +12,7 @@ class TestFoto {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.nombreArchivo = "/home/usuario/pictures/vinchuca.jpg";
+		this.nombreArchivo = "vinchuca.jpg";
 		this.foto = new Foto(this.nombreArchivo);
 	}
 
