@@ -1,6 +1,6 @@
 package unq.po2.tbd.vinchucas;
 
-public enum EspecieInsecto {
+public enum Calificacion {
 	
 	VINCHUCA_INFESTANS("Vinchuca Infestans"),
 	VINCHUCA_GUASAYANA("Vinchuca Guasayana"),
@@ -12,7 +12,7 @@ public enum EspecieInsecto {
 	
 	private final String etiqueta;
 	
-	private EspecieInsecto(String etiqueta) {
+	private Calificacion(String etiqueta) {
 		this.etiqueta = etiqueta;
 	}
 	

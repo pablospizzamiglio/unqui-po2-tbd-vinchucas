@@ -12,7 +12,7 @@ public class Zona {
 	private List<Muestra> muestras;
 	private List<Suscriptor> suscriptores;
 
-	public Zona(String nombre, Ubicacion epicentro, Double distancia, List<Muestra> muestras, List<Suscriptor> suscriptores) {
+	public Zona(String nombre, Ubicacion epicentro, Double distancia) {
 		this.setNombre(nombre);
 		this.setEpicentro(epicentro);
 		this.setDistancia(distancia);
@@ -77,11 +77,11 @@ public class Zona {
 		this.getSuscriptores().remove(suscriptor);
 	}
 	
-	public void notificarSuscriptoresNuevaMuestra(Zona zona, Muestra muestra) {
+	private void notificarSuscriptoresNuevaMuestra(Zona zona, Muestra muestra) {
 		this.getSuscriptores().forEach(s -> s.nuevaMuestra(zona, muestra));
 	}
 
-	public void notificarSuscriptoresNuevaOpinion(Zona zona, Muestra muestra) {
+	private void notificarSuscriptoresNuevaOpinion(Zona zona, Muestra muestra) {
 		this.getSuscriptores().forEach(s -> s.nuevaOpinion(zona, muestra));
 	}
 

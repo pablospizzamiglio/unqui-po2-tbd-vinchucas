@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public class Muestra {
 
 	private Usuario usuario;
-	private String foto;
+	private Imagen foto;
 	private Ubicacion ubicacion;
 	private LocalDate fecha;
-	private EspecieInsecto especie;
+	private Calificacion especie;
 	private List<Opinion> opiniones;
 	
-	public Muestra(String foto, Ubicacion ubicacion, Opinion opinion) {
+	public Muestra(Imagen foto, Ubicacion ubicacion, Opinion opinion) {
 		this.setUsuario(opinion.getUsuario());
 		this.setFoto(foto);
 		this.setFecha(opinion.getFecha());
@@ -36,11 +36,11 @@ public class Muestra {
 		this.usuario = usuario;
 	}
 
-	public String getFoto() {
+	public Imagen getFoto() {
 		return foto;
 	}
 
-	private void setFoto(String foto) {
+	private void setFoto(Imagen foto) {
 		this.foto = foto;
 	}
 
@@ -60,11 +60,11 @@ public class Muestra {
 		this.fecha = fecha;
 	}
 
-	public EspecieInsecto getEspecie() {
+	public Calificacion getEspecie() {
 		return especie;
 	}
 
-	private void setEspecie(EspecieInsecto especie) {
+	private void setEspecie(Calificacion especie) {
 		this.especie = especie;
 	}
 	
@@ -86,10 +86,10 @@ public class Muestra {
 		return this.getUsuario().getIdentificacion();
 	}
 	
-	public EspecieInsecto resultadoActual() {
-		EspecieInsecto resultadoActual = EspecieInsecto.INDEFINIDA;
+	public Calificacion resultadoActual() {
+		Calificacion resultadoActual = Calificacion.INDEFINIDA;
 		
-		Optional<Entry<EspecieInsecto, Long>> opinionMasVotada = this.getOpiniones().stream()
+		Optional<Entry<Calificacion, Long>> opinionMasVotada = this.getOpiniones().stream()
 				.collect(Collectors.groupingBy(Opinion::getCalificacion, Collectors.counting()))
 				.entrySet()
 				.stream()
@@ -98,7 +98,7 @@ public class Muestra {
 		if (opinionMasVotada.isPresent() && opinionMasVotada.get().getValue() > 1) {
 			Long maximaCantidadVotos = opinionMasVotada.get().getValue();
 			
-			List<Entry<EspecieInsecto, Long>> opinionesEmpatadas = this.getOpiniones().stream()
+			List<Entry<Calificacion, Long>> opinionesEmpatadas = this.getOpiniones().stream()
 					.collect(Collectors.groupingBy(Opinion::getCalificacion, Collectors.counting()))
 					.entrySet()
 					.stream()
@@ -159,10 +159,10 @@ public class Muestra {
 				.collect(Collectors.toList());
 	}
 	
-	public String getNivelVerificacion() {
-		String nivelVerificacion = "Votada";
+	public NivelVerificacion getNivelVerificacion() {
+		NivelVerificacion nivelVerificacion = NivelVerificacion.VOTADA;
 		if (this.estaVerificada()) {
-			nivelVerificacion = "Verificada";
+			nivelVerificacion = NivelVerificacion.VERIFICADA;
 		}
 		return nivelVerificacion;
 	}
