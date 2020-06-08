@@ -9,7 +9,7 @@ public class UsuarioEspecialista extends Usuario {
 	
 	@Override
 	public void setNivel(Nivel nivel) {
-		if (this.getNivel() != null) {
+		if (this.getNivel() == null) {
 			super.setNivel(nivel);
 		}
 	}
