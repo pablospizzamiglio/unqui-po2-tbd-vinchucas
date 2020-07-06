@@ -18,7 +18,7 @@ public class Usuario {
 		this.setIdentificacion(identificacion);
 		this.setMuestras(new ArrayList<Muestra>());
 		this.setOpiniones(new ArrayList<Opinion>());
-		this.setNivel(new NivelBasico());
+		this.setNivel(new Basico());
 	}
 	
 	public Aplicacion getAplicacion() {
@@ -62,7 +62,7 @@ public class Usuario {
 	}
 
 	public Long numeroMuestrasUltimos30Dias() {
-		return this.getOpiniones().stream()
+		return this.getMuestras().stream()
 				.filter(m -> Math.abs(ChronoUnit.DAYS.between(m.getFecha(), LocalDate.now())) >= 30)
 				.count();
 	}
@@ -74,18 +74,17 @@ public class Usuario {
 	}
 	
 	public Boolean puedeCambiarNivel() {
-		return this.numeroMuestrasUltimos30Dias() == 10 
-				&& this.numeroOpinionesUltimos30Dias() == 20;
+		return this.numeroMuestrasUltimos30Dias() > 10 
+				&& this.numeroOpinionesUltimos30Dias() > 20;
 	}
 	
 	public void recalcularNivel() {
-		if (this.puedeCambiarNivel()) {
 			this.getNivel().cambiarNivel(this);
 		}
-	}
+	
 	
 	public Boolean esExperto() {
-		return this.getNivel().esExperto();
+		return this.getNivel().esExperto(this);
 	}
 	
 	public void enviarMuestra(Muestra muestra) {
@@ -100,29 +99,10 @@ public class Usuario {
 		this.recalcularNivel();
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((identificacion == null) ? 0 : identificacion.hashCode());
-		return result;
+	
+	public void esEspecialista() {
+		this.setNivel(new Especialista());
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (identificacion == null) {
-			if (other.identificacion != null)
-				return false;
-		} else if (!identificacion.equals(other.identificacion))
-			return false;
-		return true;
-	}
+	
 
 }

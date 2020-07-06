@@ -5,21 +5,22 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-class TestOrganizacion {
-	
-	private Ubicacion ubicacion;
-	private FuncionalidadExterna funcionalidadNuevaMuestra;
-	private FuncionalidadExterna funcionalidadNuevaOpinion;
-	private Organizacion organizacion;
-	private Muestra muestra;
+
+class OrganizacionTest {
+
+	private @Mock Ubicacion ubicacion;
+	private @Mock Organizacion organizacion;
+	private @Mock Muestra muestra;
+	private @Mock FuncionalidadExterna funcionalidadNuevaMuestra;
+	private @Mock FuncionalidadExterna funcionalidadNuevaOpinion;
 	private Zona zona;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.ubicacion = mock(Ubicacion.class);
-		this.funcionalidadNuevaMuestra = mock(FuncionalidadExterna.class);
-		this.funcionalidadNuevaOpinion = mock(FuncionalidadExterna.class);
+		MockitoAnnotations.initMocks(this);
 		this.organizacion = new Organizacion(
 				this.ubicacion, 
 				TipoOrganizacion.SALUD, 
@@ -27,30 +28,51 @@ class TestOrganizacion {
 				this.funcionalidadNuevaMuestra, 
 				this.funcionalidadNuevaOpinion
 		);
-		this.muestra = mock(Muestra.class);
-		this.zona = mock(Zona.class);
 	}
-
+	
 	@Test
-	void testGettersSetters() {
+	void testGetUbicacion() {
+		// verificación
 		assertEquals(this.ubicacion, this.organizacion.getUbicacion());
+	}
+	
+	@Test
+	void testGetTipo() {
+		// verificación
 		assertEquals(TipoOrganizacion.SALUD, this.organizacion.getTipo());
+	}
+	
+	@Test
+	void testGetNumeroEmpleados() {
+		// verificación
 		assertEquals(30, this.organizacion.getNumeroEmpleados());
+	}
+	
+	@Test
+	void testGetFuncionalidadNuevaMuestra() {
+		// verificación
 		assertEquals(this.funcionalidadNuevaMuestra, this.organizacion.getFuncionalidadNuevaMuestra());
+	}
+	
+	@Test
+	void testGetFuncionalidadNuevaOpinion() {
+		// verificación
 		assertEquals(this.funcionalidadNuevaOpinion, this.organizacion.getFuncionalidadNuevaOpinion());
 	}
 	
 	@Test
 	void testNuevaMuestra() {
+		// SUT
 		this.organizacion.nuevaMuestra(this.zona, this.muestra);
-		
+		// verificación
 		verify(this.funcionalidadNuevaMuestra, times(1)).nuevoEvento(this.organizacion, this.zona, this.muestra);
 	}
 	
 	@Test
 	void testNuevaOpinion() {
+		// SUT
 		this.organizacion.nuevaOpinion(this.zona, this.muestra);
-		
+		// verificación
 		verify(this.funcionalidadNuevaOpinion, times(1)).nuevoEvento(this.organizacion, this.zona, this.muestra);
 	}
 

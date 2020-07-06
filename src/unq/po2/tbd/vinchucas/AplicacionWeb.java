@@ -57,6 +57,7 @@ public class AplicacionWeb implements Aplicacion {
 	@Override
 	public void registrarZona(Zona zona) {
 		this.getZonas().add(zona);
+		this.getMuestras().forEach(m -> zona.agregarMuestra(m));
 	}
 	
 	@Override
@@ -64,9 +65,7 @@ public class AplicacionWeb implements Aplicacion {
 		this.getMuestras().add(muestra);
 
 		for (Zona zona : this.getZonas()) {
-			if (zona.estaDentro(muestra)) {
-				zona.agregarMuestra(muestra);
-			}
+			zona.agregarMuestra(muestra);
 		}
 	}
 
@@ -80,5 +79,11 @@ public class AplicacionWeb implements Aplicacion {
 			}
 		}
 	}
+
+	@Override
+	public List<Muestra> buscar(List<CriterioDeBusqueda> criterios) {
+		return this.getBuscador().buscar(this.getMuestras(), criterios);
+	}
+
 
 }

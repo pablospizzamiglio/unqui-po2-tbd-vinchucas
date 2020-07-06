@@ -61,8 +61,10 @@ public class Zona {
 	}
 
 	public void agregarMuestra(Muestra muestra) {
-		this.getMuestras().add(muestra);
-		this.notificarSuscriptoresNuevaMuestra(this, muestra);
+		if (this.estaDentro(muestra)) {
+			this.getMuestras().add(muestra);
+			this.notificarSuscriptoresNuevaMuestra(this, muestra);
+		}
 	}
 	
 	public void nuevaOpinionRegistradaEn(Muestra muestra) {

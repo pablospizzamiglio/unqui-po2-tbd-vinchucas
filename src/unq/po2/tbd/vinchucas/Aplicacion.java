@@ -1,5 +1,7 @@
 package unq.po2.tbd.vinchucas;
 
+import java.util.List;
+
 public interface Aplicacion {
 	
 	public void registrarZona(Zona zona);
@@ -10,6 +12,6 @@ public interface Aplicacion {
 
 	public void registrarOpinionSobreMuestra(Muestra muestra, Opinion opinion);
 
-//	public List<Muestra> buscar(List<CriterioDeBusqueda);
+	public List<Muestra> buscar(List<CriterioDeBusqueda> criterios);
 
 }

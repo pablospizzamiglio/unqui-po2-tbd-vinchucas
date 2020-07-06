@@ -1,9 +1,8 @@
 package unq.po2.tbd.vinchucas;
 
-public interface Nivel {
+public abstract class Nivel {
 	
-	public Boolean esExperto();
+	public abstract Boolean  esExperto(Usuario usuario);
 	
-	public void cambiarNivel(Usuario usuario);
-
+	public abstract void cambiarNivel(Usuario usuario);
 }

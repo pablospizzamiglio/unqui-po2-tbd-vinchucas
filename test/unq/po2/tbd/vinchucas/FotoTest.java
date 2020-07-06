@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestFoto {
+
+class FotoTest {
 	
 	private Imagen foto;
 	private String nombreArchivo;
@@ -14,6 +15,11 @@ class TestFoto {
 	void setUp() throws Exception {
 		this.nombreArchivo = "vinchuca.jpg";
 		this.foto = new Foto(this.nombreArchivo);
+	}
+	
+	@Test
+	void testConstructor() {
+		assertNotNull(this.foto);
 	}
 
 	@Test
